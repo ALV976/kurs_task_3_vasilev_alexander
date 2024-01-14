@@ -1,8 +1,7 @@
 import sys
+
 sys.path.append('utils')
-
 from functions import open_file, get_format, list_executed
-
 
 data = open_file()
 data = list_executed(data)
