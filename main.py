@@ -1,25 +1,16 @@
-import json
-from datetime import datetime
+import sys
+sys.path.append('utils')
 
-class Event:
-    def __init__(self, date, name):
-        self.date = datetime.strptime(date, "%Y-%m-%d")
-        self.name = name
+from functions import open_file, get_format, list_executed
 
-# Чтение файла JSON
-with open('operations.json', 'r') as f:
-    events_data = json.load(f)
 
-# Преобразование данных из JSON в объекты Event
-events = [Event(event_data['date'], event_data['name']) for event_data in events_data]
+data = open_file()
+data = list_executed(data)
+data = sorted(data, key=lambda x: x['date'], reverse=True)[:5]
 
-# Сортировка событий по дате
-sorted_events = sorted(events, key=lambda x: x.date)
-
-# Выбор последних пяти событий
-last_five_events = sorted_events[-5:]
-
-# Вывод последних пяти событий
-for event in last_five_events:
-    print(f"Событие: {event.name}, Дата: {event.date.strftime('%Y-%m-%d')}")
-
+for trans in data:
+    trans_format = get_format(trans)
+    print(trans['date'], ' ', trans['description'])
+    print(trans['from'], '->', trans['to'])
+    print(trans['operationAmount']['amount'], trans['operationAmount']['currency']['name'])
+    print()
