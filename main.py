@@ -1,16 +1,25 @@
-# This is a sample Python script.
+import json
+from datetime import datetime
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+class Event:
+    def __init__(self, date, name):
+        self.date = datetime.strptime(date, "%Y-%m-%d")
+        self.name = name
 
+# Чтение файла JSON
+with open('operations.json', 'r') as f:
+    events_data = json.load(f)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Преобразование данных из JSON в объекты Event
+events = [Event(event_data['date'], event_data['name']) for event_data in events_data]
 
+# Сортировка событий по дате
+sorted_events = sorted(events, key=lambda x: x.date)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# Выбор последних пяти событий
+last_five_events = sorted_events[-5:]
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Вывод последних пяти событий
+for event in last_five_events:
+    print(f"Событие: {event.name}, Дата: {event.date.strftime('%Y-%m-%d')}")
+
