@@ -54,7 +54,7 @@ def get_mask(account_number):
 def open_file():
     """ Открыть файл JSON"""
 
-    operations_json = os.path.join('utils', 'operations.json')
+    operations_json = 'utils/operations.json'
     with open(operations_json, 'r', encoding="utf-8") as file:
         operations_list = json.load(file)
         return operations_list
