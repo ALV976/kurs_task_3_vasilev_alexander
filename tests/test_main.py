@@ -12,4 +12,15 @@ def test_get_mask():
     assert functions.get_mask("Visa Classic 2842878893689012") == "Visa Classic 2842 87** **** 9012"
     assert functions.get_mask("Счет 46765464282437878125") == 'Счет **8125'
 
-#def test_
+def test_open_file():
+    data = functions.open_file()
+    assert data is not None
+    assert isinstance(data, list)
+
+def test_executed():
+    data = functions.open_file()
+    new_list = functions.list_executed(data)
+    assert new_list is not None
+    for i in new_list:
+        assert i['state'] == 'EXECUTED'
+
